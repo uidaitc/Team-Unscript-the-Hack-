@@ -1,5 +1,8 @@
+import 'package:aadhaar_address_update/screens/dispute.dart';
+import 'package:aadhaar_address_update/screens/home/homepage.dart';
 import 'package:aadhaar_address_update/screens/login.dart';
 import 'package:aadhaar_address_update/screens/otp.dart';
+import 'package:aadhaar_address_update/screens/verifyScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:aadhaar_address_update/config/theme.dart';
 
@@ -16,7 +19,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Palette.shade1,
         primarySwatch: Colors.blue,
       ),
-      home: otpScreen(),
+      home: disputeScreen(),
     );
   }
 }
