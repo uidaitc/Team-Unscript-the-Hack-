@@ -1,4 +1,6 @@
 import 'package:aadhaar_address_update/config/theme.dart';
+import 'package:aadhaar_address_update/widgets/button_square.dart';
+import 'package:aadhaar_address_update/widgets/container_otp.dart';
 import 'package:flutter/material.dart';
 
 class otpScreen extends StatelessWidget {
@@ -6,13 +8,21 @@ class otpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String a, b, c, d, e, f;
+    a = '1';
+    b = '3';
+    c = '2';
+    d = '6';
+    e = '7';
+    f = '3';
     return Scaffold(
       body: Container(
         margin: EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.asset('assets/images/Aadhar-Color.png', 
+            Image.asset(
+              'assets/images/Aadhar-Color.png',
             ),
             SizedBox(height: 80),
             Text(
@@ -26,13 +36,26 @@ class otpScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                ContainerOTP(),
-                ContainerOTP(),
-                ContainerOTP(),
-                ContainerOTP(),
-                ContainerOTP(),
-                ContainerOTP()
+                ContainerOTP(digit: a),
+                ContainerOTP(digit: b),
+                ContainerOTP(digit: c),
+                ContainerOTP(digit: d),
+                ContainerOTP(digit: e),
+                ContainerOTP(digit: f)
               ],
+            ),
+            SizedBox(
+              height: 73,
+            ),
+            InkWell(
+              child: ButtonSq(
+                title: 'LOGIN',
+                // onTap: () {}
+              ),
+              onTap: () {
+                int newOtp = getOTP(a, b, c, d, e, f);
+                print(newOtp);
+              },
             )
           ],
         ),
@@ -41,26 +64,7 @@ class otpScreen extends StatelessWidget {
   }
 }
 
-class ContainerOTP extends StatelessWidget {
-  const ContainerOTP({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 50,
-      height: 50,
-      child: Center(
-        child: Text(
-          '7',
-          style: TextStyle(color: Palette.background, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-      ),
-      decoration: BoxDecoration(
-        color: Palette.background.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(12),
-      ),
-    );
-  }
+int getOTP(String a, String b, String c, String d, String e, String f) {
+  int otp = int.parse(a + b + c + d + e + f);
+  return otp;
 }
