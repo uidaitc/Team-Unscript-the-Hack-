@@ -18,13 +18,16 @@ class _UpdatePageState extends State<UpdatePage> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 1,
         centerTitle: true,
-        title: Text('hi', textAlign: TextAlign.center,),
+        title: Text(
+          'hi',
+          textAlign: TextAlign.center,
+        ),
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
             color: Colors.white,
           ),
-          onPressed: () { },
+          onPressed: () {},
         ),
         actions: [
           IconButton(
@@ -111,88 +114,68 @@ class _UpdatePageState extends State<UpdatePage> {
               ),
 
               Padding(
-                padding: const EdgeInsets.fromLTRB(15,4,15,4),
+                padding: const EdgeInsets.fromLTRB(15, 4, 15, 4),
                 child: Container(
                   height: 50,
                   child: TextField(
-                    style: TextStyle(
-                      color: Palette.shade2
-                    ),
+                    style: TextStyle(color: Palette.shade2),
                     cursorColor: Palette.shade1,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                         hintText: "Door/Flat Number",
                         fillColor: Palette.shade3),
-                        
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(15,4,15,4),
+                padding: const EdgeInsets.fromLTRB(15, 4, 15, 4),
                 child: Container(
                   height: 50,
                   child: TextField(
-                    style: TextStyle(
-                      color: Palette.shade2
-                    ),
+                    style: TextStyle(color: Palette.shade2),
                     cursorColor: Palette.shade1,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
-                        hintText: "Society Name",
-                        fillColor: Palette.shade1),
-                        
+                        hintText: "Society Name", fillColor: Palette.shade1),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(15,4,15,4),
+                padding: const EdgeInsets.fromLTRB(15, 4, 15, 4),
                 child: Container(
                   height: 50,
                   child: TextField(
-                    style: TextStyle(
-                      color: Palette.shade2
-                    ),
+                    style: TextStyle(color: Palette.shade2),
                     cursorColor: Palette.shade1,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
-                        hintText: "Landmark",
-                        fillColor: Palette.shade3),
-                        
+                        hintText: "Landmark", fillColor: Palette.shade3),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(15,4,15,4),
+                padding: const EdgeInsets.fromLTRB(15, 4, 15, 4),
                 child: Container(
                   height: 50,
                   child: TextField(
-                    style: TextStyle(
-                      color: Palette.shade2
-                    ),
+                    style: TextStyle(color: Palette.shade2),
                     cursorColor: Palette.shade1,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
-                        hintText: "Street Name",
-                        fillColor: Palette.shade3),
-                        
+                        hintText: "Street Name", fillColor: Palette.shade3),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(15,4,15,4),
+                padding: const EdgeInsets.fromLTRB(15, 4, 15, 4),
                 child: Container(
                   height: 50,
                   child: TextField(
-                    
-                    style: TextStyle(
-                      color: Palette.shade2
-                    ),
+                    style: TextStyle(color: Palette.shade2),
                     cursorColor: Palette.shade1,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
-                        hintText: "Locality",
-                        fillColor: Palette.shade3),
-                        
+                        hintText: "Locality", fillColor: Palette.shade3),
                   ),
                 ),
               ),
@@ -266,7 +249,7 @@ class _UpdatePageState extends State<UpdatePage> {
                   decoration: BoxDecoration(
                     // border: Border.all(),
                     border: Border.all(color: Palette.text),
-                    
+
                     borderRadius: BorderRadius.circular(10),
                     color: Palette.white,
                   ),
@@ -304,7 +287,6 @@ class _UpdatePageState extends State<UpdatePage> {
                     padding: EdgeInsets.symmetric(horizontal: 50),
                     elevation: 2,
                     shape: RoundedRectangleBorder(
-                      
                         borderRadius: BorderRadius.circular(20)),
                     child: Text(
                       "Confirm Changes".toUpperCase(),

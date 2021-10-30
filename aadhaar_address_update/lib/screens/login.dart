@@ -1,7 +1,9 @@
+import 'package:aadhaar_address_update/backend/notify.dart';
 import 'package:aadhaar_address_update/config/theme.dart';
 import 'package:aadhaar_address_update/screens/otp.dart';
 import 'package:aadhaar_address_update/screens/register.dart';
 import 'package:aadhaar_address_update/widgets/button_square.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
 class loginScreen extends StatefulWidget {
@@ -13,6 +15,42 @@ class loginScreen extends StatefulWidget {
 
 class _loginScreenState extends State<loginScreen> {
   late String phoneNo;
+  @override
+  void initState() {
+    super.initState();
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text('Allow Notification'),
+                content: Text('Please allow the app to send notifications.'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      "Don't allow",
+                      style: TextStyle(color: Palette.shade2, fontSize: 18),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () => AwesomeNotifications()
+                        .requestPermissionToSendNotifications()
+                        .then((_) => Navigator.pop(context)),
+                    child: Text(
+                      "Allow",
+                      style: TextStyle(color: Palette.shade2, fontSize: 18),
+                    ),
+                  ),
+                ],
+              ));
+    });
+    AwesomeNotifications().actionStream.listen((notification) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => NotifBox()));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,78 +74,79 @@ class _loginScreenState extends State<loginScreen> {
             ),
             SizedBox(height: 10),
             Container(
-                padding: EdgeInsets.all(28),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  children: [
-                    TextFormField(
-                      keyboardType: TextInputType.number,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black12),
-                            borderRadius: BorderRadius.circular(10)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black12),
-                            borderRadius: BorderRadius.circular(10)),
-                        prefix: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
-                          child: Text(
-                            '(+91)',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        suffixIcon: Icon(
-                          Icons.check_circle,
-                          color: Colors.green,
-                          size: 32,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 22,
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => Register()),
-                          );
-                        },
-                        style: ButtonStyle(
-                          foregroundColor:
-                              MaterialStateProperty.all<Color>(Colors.white),
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.purple),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(24.0),
-                            ),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(14.0),
-                          child: Text(
-                            'Send',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+              padding: EdgeInsets.all(28),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
               ),
+              child: Column(
+                children: [
+                  TextFormField(
+                    keyboardType: TextInputType.number,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black12),
+                          borderRadius: BorderRadius.circular(10)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black12),
+                          borderRadius: BorderRadius.circular(10)),
+                      prefix: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        child: Text(
+                          '(+91)',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      suffixIcon: Icon(
+                        Icons.check_circle,
+                        color: Colors.green,
+                        size: 32,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 22,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        createNotification('Enter OTP', 'Please enter OTP');
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => Register()),
+                        );
+                      },
+                      style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.purple),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24.0),
+                          ),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(14.0),
+                        child: Text(
+                          'Send',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
             // Container(
             //   width: double.infinity,
             //   height: 60,
@@ -149,7 +188,7 @@ class _loginScreenState extends State<loginScreen> {
             //         //   decoration: InputDecoration(
             //         //     hintText: "Enter Phone Number",
             //         //     fillColor: Palette.background),
-            //         //     onChanged: (val){ 
+            //         //     onChanged: (val){
             //         //       setState(() {
 
             //         //         this.phoneNo = val;
@@ -176,7 +215,6 @@ class _loginScreenState extends State<loginScreen> {
             //     Navigator.push(context,
             //           MaterialPageRoute(builder: (context) => otpScreen()));
             //   },
-            
           ]),
         ),
       ),

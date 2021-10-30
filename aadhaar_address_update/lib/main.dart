@@ -1,11 +1,23 @@
 // import 'package:aadhaar_address_update/screens/homescreen/updatescreen.dart';
 import 'package:aadhaar_address_update/screens/login.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 // import 'package:aadhaar_address_update/screens/register.dart';
 import 'package:flutter/material.dart';
 import 'package:aadhaar_address_update/config/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
+  AwesomeNotifications().initialize(
+      "",
+      [
+        NotificationChannel(
+            channelKey: 'basic_channel',
+            channelName: 'Basic Notifications',
+            defaultColor: Palette.background,
+            importance: NotificationImportance.High,
+            channelShowBadge: true),
+      ],
+      debug: true);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
