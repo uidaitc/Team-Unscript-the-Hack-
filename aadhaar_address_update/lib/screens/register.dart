@@ -97,7 +97,6 @@ class _RegisterState extends State<Register> {
                           Icons.lock,
                           color: Palette.shade1,
                         ),
-                        
                         suffixIcon: Icon(
                           Icons.check_circle,
                           color: Colors.green,
