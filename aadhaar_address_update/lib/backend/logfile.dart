@@ -1,0 +1,1 @@
+//all funcs related to log
