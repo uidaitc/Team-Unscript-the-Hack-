@@ -8,6 +8,8 @@ class verifyScreen extends StatefulWidget {
 }
 
 class _verifyScreenState extends State<verifyScreen> {
+  bool isVerified = true;
+  Widget address = Container();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +17,7 @@ class _verifyScreenState extends State<verifyScreen> {
         elevation: 1,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         centerTitle: true,
-          title: Text("abc",
+          title: Text("Update Address",
          style: TextStyle(fontWeight: FontWeight.bold ,fontSize: 18)),
         leading: IconButton(
           icon: Icon(
@@ -99,7 +101,12 @@ class _verifyScreenState extends State<verifyScreen> {
               ),
                Center(
                  child: RaisedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          
+                          address = getAddress(isVerified);
+                        });
+                      },
                       color: Palette.shade1,
                       padding: EdgeInsets.symmetric(horizontal: 50),
                       elevation: 2,
@@ -116,9 +123,28 @@ class _verifyScreenState extends State<verifyScreen> {
                SizedBox(height: 50),
                
                //add fetching data function here
+               address,
+            
 
 
-               Center(
+            
+             ],
+             
+
+           ),
+        
+
+         ),
+         
+        
+
+      
+    );
+  }
+  Widget getAddress(bool isVerified){
+    if (isVerified){
+       return Container(
+         child: Center(
                  child: Container(child: Center(
                    child: Center(
 
@@ -146,22 +172,11 @@ class _verifyScreenState extends State<verifyScreen> {
                      ),
                    ),
                  ),),
-               ),
-            
+               ),           
+       );
 
+    }
+    return CircularProgressIndicator(color: Palette.text);
 
-            
-             ],
-             
-
-           ),
-        
-
-         ),
-         
-        
-
-      
-    );
   }
 }

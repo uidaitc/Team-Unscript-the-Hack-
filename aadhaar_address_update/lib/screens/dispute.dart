@@ -9,6 +9,10 @@ class disputeScreen extends StatefulWidget {
 }
 
 class _disputeScreenState extends State<disputeScreen> {
+  List<String> names=['Name','Rohit Singh','Mohit Raina'];
+  List<String> address=['Address','PS', 'FC'];
+  List<String> status=['Status','Raised', 'Resolved'];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,21 +61,21 @@ class _disputeScreenState extends State<disputeScreen> {
                 child: Table(
                   border: TableBorder.all(),
                   columnWidths: {1: FlexColumnWidth(1.5)},
-                  children: [
-                    TableRow(
-                      children: [
-                        Text('Name',
-                        style: TextStyle(fontSize: 18,fontWeight:FontWeight.bold )),
+                  children: List.generate(names.length, (index) => getRow(index)),
+                    // TableRow(
+                    //   children: [
+                    //     Text('Name',
+                    //     style: TextStyle(fontSize: 18,fontWeight:FontWeight.bold )),
 
-                        Text('Address',
-                        style: TextStyle(fontSize: 18,fontWeight:FontWeight.bold )),
+                    //     Text('Address',
+                    //     style: TextStyle(fontSize: 18,fontWeight:FontWeight.bold )),
 
-                        Text('Issue',
-                        style: TextStyle(fontSize: 18,fontWeight:FontWeight.bold ))
-                      ]
-                    )
+                    //     Text('Status',
+                    //     style: TextStyle(fontSize: 18,fontWeight:FontWeight.bold ))
+                    //   ]
+                    // )
 
-                  ],
+                  
                 )
                   
                         
@@ -86,4 +90,19 @@ class _disputeScreenState extends State<disputeScreen> {
     );
 
   }
+  TableRow getRow(int i){
+    return TableRow(
+      children: [
+                        Text('${names[i]}',
+                        style: TextStyle(fontSize: 18,fontWeight:FontWeight.bold )),
+
+                        Text('${address[i]}',
+                        style: TextStyle(fontSize: 18,fontWeight:FontWeight.bold )),
+
+                        Text('${status[i]}',
+                        style: TextStyle(fontSize: 18,fontWeight:FontWeight.bold ))
+                      ]
+    );
+  }
+
 }
