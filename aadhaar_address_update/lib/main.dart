@@ -1,3 +1,10 @@
+
+import 'package:aadhaar_address_update/screens/dispute.dart';
+import 'package:aadhaar_address_update/screens/home/homepage.dart';
+import 'package:aadhaar_address_update/screens/login.dart';
+import 'package:aadhaar_address_update/screens/otp.dart';
+import 'package:aadhaar_address_update/screens/verifyScreen.dart';
+import 'package:aadhaar_address_update/screens/homescreen/updatescreen.dart';
 // import 'package:aadhaar_address_update/screens/homescreen/updatescreen.dart';
 import 'package:aadhaar_address_update/screens/login.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -32,7 +39,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Palette.shade1,
         primarySwatch: Colors.blue,
       ),
-      home: loginScreen(),
+      home: verifyScreen(),
     );
   }
 }
