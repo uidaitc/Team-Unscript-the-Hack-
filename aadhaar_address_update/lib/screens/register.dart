@@ -1,3 +1,4 @@
+import 'package:aadhaar_address_update/backend/database.dart';
 import 'package:aadhaar_address_update/config/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -97,7 +98,6 @@ class _RegisterState extends State<Register> {
                           Icons.lock,
                           color: Palette.shade1,
                         ),
-                        
                         suffixIcon: Icon(
                           Icons.check_circle,
                           color: Colors.green,
@@ -112,6 +112,9 @@ class _RegisterState extends State<Register> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
+                          //isko api call me bulaana hai. tried here for testing
+                          Database().addUser("Mrun", "1234", "20012001", "F",
+                              "PS, Pune", "assets/images/photos");
                           Navigator.of(context).push(
                             MaterialPageRoute(
                                 builder: (context) => otpScreen()),

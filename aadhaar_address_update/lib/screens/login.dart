@@ -18,6 +18,7 @@ class _loginScreenState extends State<loginScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Container(
           margin: EdgeInsets.all(25.0),
           child: Column(children: <Widget>[

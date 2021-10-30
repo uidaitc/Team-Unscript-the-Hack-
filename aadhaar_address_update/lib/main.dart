@@ -5,12 +5,16 @@ import 'package:aadhaar_address_update/screens/login.dart';
 import 'package:aadhaar_address_update/screens/otp.dart';
 import 'package:aadhaar_address_update/screens/verifyScreen.dart';
 import 'package:aadhaar_address_update/screens/homescreen/updatescreen.dart';
+// import 'package:aadhaar_address_update/screens/homescreen/updatescreen.dart';
 import 'package:aadhaar_address_update/screens/login.dart';
-import 'package:aadhaar_address_update/screens/register.dart';
+// import 'package:aadhaar_address_update/screens/register.dart';
 import 'package:flutter/material.dart';
 import 'package:aadhaar_address_update/config/theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -27,4 +31,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

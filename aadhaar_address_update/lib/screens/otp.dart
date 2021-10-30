@@ -1,3 +1,4 @@
+import 'package:aadhaar_address_update/backend/notify.dart';
 import 'package:aadhaar_address_update/config/theme.dart';
 import 'package:aadhaar_address_update/widgets/button_square.dart';
 import 'package:aadhaar_address_update/widgets/container_otp.dart';
@@ -55,6 +56,9 @@ class otpScreen extends StatelessWidget {
               onTap: () {
                 int newOtp = getOTP(a, b, c, d, e, f);
                 print(newOtp);
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => NotifBox()),
+                );
               },
             )
           ],

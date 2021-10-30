@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "451829540646",
+    "project_id": "unscript-the-hack",
+    "storage_bucket": "unscript-the-hack.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451829540646:android:1b56b6601c6dbd6717c3e7",
+        "android_client_info": {
+          "package_name": "com.example.aadhaar_address_update"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "451829540646-aqf0f3t1lbjrvc4r8j26id2sbh3eq9ra.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDw2ZsCgRfzu0k1CL935SjwWZimSeqM2_E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "451829540646-aqf0f3t1lbjrvc4r8j26id2sbh3eq9ra.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
