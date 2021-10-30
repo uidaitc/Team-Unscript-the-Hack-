@@ -30,6 +30,8 @@ dependencies:
   cloud_firestore: ^2.5.4
   firebase_core: ^1.8.0
   flutter_local_notifications: ^9.0.1
+  intl: ^0.16.1
+  flutter_cupertino_date_picker: ^0.8.0
 
 dev_dependencies:
   flutter_test:
