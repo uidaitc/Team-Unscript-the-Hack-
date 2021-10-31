@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Database {
+  
   Database();
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');

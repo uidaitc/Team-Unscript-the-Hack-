@@ -11,6 +11,11 @@ class UpdatePage extends StatefulWidget {
 }
 
 class _UpdatePageState extends State<UpdatePage> {
+  String? flat;
+  String? society;
+  String? landmark;
+  String? street;
+  String? locality;
   //bool showPassword = false;
   @override
   Widget build(BuildContext context) {
@@ -122,6 +127,11 @@ class _UpdatePageState extends State<UpdatePage> {
                     style: TextStyle(color: Palette.shade2),
                     cursorColor: Palette.shade1,
                     keyboardType: TextInputType.text,
+                    onChanged: (text) {
+                      setState(() {
+                        flat = text;
+                      });
+                    },
                     decoration: InputDecoration(
                         hintText: "Door/Flat Number",
                         fillColor: Palette.shade3),
@@ -136,6 +146,11 @@ class _UpdatePageState extends State<UpdatePage> {
                     style: TextStyle(color: Palette.shade2),
                     cursorColor: Palette.shade1,
                     keyboardType: TextInputType.phone,
+                    onChanged: (text) {
+                      setState(() {
+                        society = text;
+                      });
+                    },
                     decoration: InputDecoration(
                         hintText: "Society Name", fillColor: Palette.shade1),
                   ),
@@ -149,6 +164,11 @@ class _UpdatePageState extends State<UpdatePage> {
                     style: TextStyle(color: Palette.shade2),
                     cursorColor: Palette.shade1,
                     keyboardType: TextInputType.phone,
+                    onChanged: (text) {
+                      setState(() {
+                        landmark = text;
+                      });
+                    },
                     decoration: InputDecoration(
                         hintText: "Landmark", fillColor: Palette.shade3),
                   ),
@@ -162,6 +182,11 @@ class _UpdatePageState extends State<UpdatePage> {
                     style: TextStyle(color: Palette.shade2),
                     cursorColor: Palette.shade1,
                     keyboardType: TextInputType.phone,
+                    onChanged: (text) {
+                      setState(() {
+                        street = text;
+                      });
+                    },
                     decoration: InputDecoration(
                         hintText: "Street Name", fillColor: Palette.shade3),
                   ),
@@ -175,6 +200,11 @@ class _UpdatePageState extends State<UpdatePage> {
                     style: TextStyle(color: Palette.shade2),
                     cursorColor: Palette.shade1,
                     keyboardType: TextInputType.phone,
+                    onChanged: (text) {
+                      setState(() {
+                        locality = text;
+                      });
+                    },
                     decoration: InputDecoration(
                         hintText: "Locality", fillColor: Palette.shade3),
                   ),
@@ -343,7 +373,6 @@ class _UpdatePageState extends State<UpdatePage> {
   //   );
   // }
   bool validate() {
-    //String flat, String society, String landmark, String street, String locality
     return true;
   }
 }

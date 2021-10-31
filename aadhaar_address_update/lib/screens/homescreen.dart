@@ -3,9 +3,11 @@ import 'package:aadhaar_address_update/config/theme.dart';
 import 'package:aadhaar_address_update/main.dart';
 import 'package:aadhaar_address_update/screens/dispute.dart';
 import 'package:aadhaar_address_update/screens/homescreen/updatescreen.dart';
+import 'package:aadhaar_address_update/screens/verifyScreen.dart';
 import 'package:aadhaar_address_update/widgets/toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class homeScreen extends StatefulWidget {
   homeScreen({Key? key, required this.docId}) : super(key: key);
@@ -25,37 +27,31 @@ class _homeScreenState extends State<homeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-            elevation: 1,
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            centerTitle: true,
-            title: Text("Dashboard",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-            // leading: IconButton(
-            //   icon: Icon(
-            //     Icons.arrow_back,
-            //     color: Colors.white,
-            //   ),
-            //   onPressed: () {
-            //     Navigator.pop(context);
-            //   },
-            // ),
-            actions: [
-              IconButton(
-                icon: Icon(
-                  Icons.logout_outlined,
-                  color: Colors.white,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+          appBar: AppBar(
+              elevation: 1,
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              centerTitle: true,
+              title: Text("Dashboard",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+              automaticallyImplyLeading: false,
+              actions: [
+                IconButton(
+                  icon: Icon(
+                    Icons.logout_outlined,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    //logout
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (BuildContext context) => SettingsPage()));
+                  },
                 ),
-                onPressed: () {
-                  writeData("{'naya':line}");
-                  printLogs();
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: (BuildContext context) => SettingsPage()));
-                },
-              ),
-            ]),
-        body: home());
+              ]),
+          body: home()),
+    );
   }
 
   Widget home() {
@@ -203,7 +199,7 @@ class _homeScreenState extends State<homeScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => UpdatePage()));
+                                  builder: (context) => verifyScreen()));
                         },
                         color: Palette.shade1,
                         padding: EdgeInsets.symmetric(horizontal: 50),

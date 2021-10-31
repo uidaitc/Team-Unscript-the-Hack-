@@ -36,32 +36,15 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  DateTime timeBackPressed = DateTime.now();
+  
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        timeBackPressed = DateTime.now();
-        final difference = DateTime.now().difference(timeBackPressed);
-        final isExitWarning = difference >= Duration(seconds: 2);
-
-        timeBackPressed = DateTime.now();
-
-        if (isExitWarning) {
-          return false;
-        } else {
-          final message = 'Press back again to exit';
-          Fluttertoast.showToast(msg: message, fontSize: 18);
-          return true;
-        }
-      },
-      child: MaterialApp(
-        theme: ThemeData(
-          scaffoldBackgroundColor: Palette.shade1,
-          primarySwatch: Colors.blue,
-        ),
-        home: verifyScreen(),
+    return MaterialApp(
+      theme: ThemeData(
+        scaffoldBackgroundColor: Palette.shade1,
+        primarySwatch: Colors.blue,
       ),
+      home: loginScreen(),
     );
   }
 }

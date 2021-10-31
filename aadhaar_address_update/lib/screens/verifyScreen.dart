@@ -1,5 +1,7 @@
 import 'package:aadhaar_address_update/backend/api.dart';
+import 'package:aadhaar_address_update/backend/notify.dart';
 import 'package:aadhaar_address_update/config/theme.dart';
+import 'package:aadhaar_address_update/screens/homescreen/updatescreen.dart';
 import 'package:flutter/material.dart';
 //import 'package:intl/intl.dart';
 
@@ -22,13 +24,7 @@ class _verifyScreenState extends State<verifyScreen> {
           centerTitle: true,
           title: Text("Update Address",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            ),
-            onPressed: () {},
-          ),
+          automaticallyImplyLeading: true,
           actions: [
             IconButton(
               icon: Icon(
@@ -59,12 +55,13 @@ class _verifyScreenState extends State<verifyScreen> {
                 child: TextField(
                   style: TextStyle(color: Palette.shade2),
                   cursorColor: Palette.shade1,
-                  keyboardType: TextInputType.phone,
+                  keyboardType: TextInputType.text,
+                  textAlign: TextAlign.left,
                   decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.phone_android_outlined),
                       border: OutlineInputBorder(
                           borderSide: BorderSide(color: Palette.text)),
-                          prefixIcon: Icon(Icons.phone),
-                      prefixText: '+91',
+                      // prefixText: '+91',
                       hintText: "Enter Introducer's Number",
                       fillColor: Palette.shade3),
                 ),
@@ -77,16 +74,18 @@ class _verifyScreenState extends State<verifyScreen> {
                 child: Container(
                   height: 80,
                   child: TextField(
+                    textAlign: TextAlign.left,
                     style: TextStyle(color: Palette.shade2),
                     cursorColor: Palette.shade1,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
+                        alignLabelWithHint: true,
                         border: OutlineInputBorder(
                             borderSide: BorderSide(color: Palette.text)),
                         helperText:
-                            '     Please Enter the 6 digit OTP sent to your Introducer',
+                            '           Please Enter the 6 digit OTP sent to your Introducer',
                         prefixIcon: Icon(Icons.lock),
-                        hintText: "       Enter OTP",
+                        hintText: "Enter OTP",
                         fillColor: Palette.shade3),
                   ),
                 ),
@@ -95,9 +94,8 @@ class _verifyScreenState extends State<verifyScreen> {
             Center(
               child: RaisedButton(
                 onPressed: () {
-                  setState(() async {
-                    
-                    address = await getAddress(isVerified);
+                  setState(() {
+                    address = getAddress(isVerified);
                   });
                 },
                 color: Palette.shade1,
@@ -121,34 +119,44 @@ class _verifyScreenState extends State<verifyScreen> {
     );
   }
 
-  Future<Widget> getAddress(bool isVerified) async {
-   List latlong = await PlacesService().getAutocomplete('IISER, Pune');
+  // Widget getAddress(bool isVerified)  {
+  //List latlong =  PlacesService().getAutocomplete('IISER, Pune');
+  Widget getAddress(bool isVerified) {
     if (isVerified) {
       return Container(
         child: Center(
           child: Container(
-            child: Center(
-              child: Center(
-                child: Row(
-                  children: [
-                    SizedBox(width: 70),
-                    RaisedButton(
-                      onPressed: () {},
-                      color: Palette.shade1,
-                      child: Text('Yes'),
-                      textColor: Palette.white,
-                    ),
-                    SizedBox(width: 50),
-                    RaisedButton(
-                      onPressed: () {},
-                      color: Palette.shade1,
-                      padding: const EdgeInsets.fromLTRB(15, 4, 15, 4),
-                      child: Text('No'),
-                      textColor: Palette.white,
-                    ),
-                  ],
+            child: Row(
+              children: [
+                SizedBox(width: 70),
+                RaisedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NotifBox(
+                                    type: 'will-be-updated',
+                                    data: {
+                                      'date':
+                                          '${DateTime.now().add(Duration(days: 7))}'
+                                    })));
+                  },
+                  color: Palette.shade1,
+                  child: Text('Yes'),
+                  textColor: Palette.white,
                 ),
-              ),
+                SizedBox(width: 50),
+                RaisedButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => UpdatePage()));
+                  },
+                  color: Palette.shade1,
+                  padding: const EdgeInsets.fromLTRB(15, 4, 15, 4),
+                  child: Text('No'),
+                  textColor: Palette.white,
+                ),
+              ],
             ),
           ),
         ),
