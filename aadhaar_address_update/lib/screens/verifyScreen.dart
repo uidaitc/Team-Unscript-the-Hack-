@@ -1,9 +1,10 @@
 import 'package:aadhaar_address_update/backend/api.dart';
 import 'package:aadhaar_address_update/backend/notify.dart';
 import 'package:aadhaar_address_update/config/theme.dart';
-import 'package:aadhaar_address_update/screens/homescreen/updatescreen.dart';
 import 'package:flutter/material.dart';
-//import 'package:intl/intl.dart';
+import 'package:intl/intl.dart';
+
+import 'homescreen/updatescreen.dart';
 
 class verifyScreen extends StatefulWidget {
   const verifyScreen({Key? key}) : super(key: key);
@@ -16,8 +17,20 @@ class _verifyScreenState extends State<verifyScreen> {
   bool isVerified = true;
   String add = '';
   String otp = '';
-  String sid = "999977354932";
+  String sid = "999930135314";
   Widget address = Container();
+  String ogaddress = "";
+  var poi;
+  var poa;
+  @override
+  void initState() {
+    super.initState();
+    poi = ValidateOTP().getPOI()["Poi"];
+    poa = ValidateOTP().getPOI()["Poa"];
+    ogaddress = '${poa["house"]} '+'${poa["lm"]}, '+'${poa["street"]}, '+'${poa["loc"]}, '+'${poa["vtc"]}, '+'${poa["dist"]}, '+'${poa["state"]}, '+'${poa["country"]}, '+'${poa["pc"]}. ';
+  }
+  
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,6 +59,11 @@ class _verifyScreenState extends State<verifyScreen> {
         padding: EdgeInsets.only(left: 16, top: 25, right: 16),
         child: Column(
           children: [
+            Text("For new Address",
+                style: TextStyle(
+                    color: Palette.shade1,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w500)),
             SizedBox(height: 15, width: 15),
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 4, 15, 4),
@@ -66,9 +84,7 @@ class _verifyScreenState extends State<verifyScreen> {
                 ),
               ),
             ),
-
-            //SizedBox(height: 15, width: 15),
-            Center(
+                        Center(
               child: RaisedButton(
                 onPressed: () {
                   ValidateOTP().sendOTP(sid);
@@ -97,11 +113,6 @@ class _verifyScreenState extends State<verifyScreen> {
                     onChanged: (text) {
                       setState(() {
                         otp = text;
-                        ValidateOTP().eKYC(sid, otp).then((value) {
-                          if (value) {
-                            add = 'IISER, Pune';
-                          }
-                        });
                       });
                     },
                     textAlign: TextAlign.left,
@@ -125,6 +136,13 @@ class _verifyScreenState extends State<verifyScreen> {
               child: RaisedButton(
                 onPressed: () {
                   setState(() {
+                  ValidateOTP().eKYC(sid, otp).then((value) {
+                    poa = ValidateOTP().getPOI()["Poa"];
+                    ogaddress = '${poa["house"]} '+'${poa["lm"]}, '+'${poa["street"]}, '+'${poa["loc"]}, '+'${poa["vtc"]}, '+'${poa["dist"]}, '+'${poa["state"]}, '+'${poa["country"]}, '+'${poa["pc"]}. ';
+                        if (value) {
+                          add = ogaddress;
+                        }
+                        });
                     address = getAddress(isVerified);
                   });
                 },
@@ -149,21 +167,19 @@ class _verifyScreenState extends State<verifyScreen> {
     );
   }
 
-  // Widget getAddress(bool isVerified)  {
-  //List latlong =  PlacesService().getAutocomplete('IISER, Pune');
   Widget getAddress(bool isVerified) {
     if (isVerified) {
       return Container(
         child: Center(
           child: Column(
             children: [
-              Text('$add'),
+              Text('$ogaddress'),
               Container(
                 child: Row(
                   children: [
                     SizedBox(width: 70),
                     RaisedButton(
-                      onPressed: () {
+                      onPressed: () { 
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -172,8 +188,7 @@ class _verifyScreenState extends State<verifyScreen> {
                                         data: {
                                           'date':
                                               '${DateTime.now().add(Duration(days: 7))}'
-                                        })));
-                      },
+                                        })));},
                       color: Palette.shade1,
                       child: Text('Yes'),
                       textColor: Palette.white,
@@ -184,8 +199,7 @@ class _verifyScreenState extends State<verifyScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => UpdatePage()));
-                      },
+                                builder: (context) => UpdatePage()));},
                       color: Palette.shade1,
                       padding: const EdgeInsets.fromLTRB(15, 4, 15, 4),
                       child: Text('No'),
@@ -195,9 +209,9 @@ class _verifyScreenState extends State<verifyScreen> {
                 ),
               ),
             ],
+            ),
           ),
-        ),
-      );
+        );
     }
     return CircularProgressIndicator(color: Palette.text);
   }
