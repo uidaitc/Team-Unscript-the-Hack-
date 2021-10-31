@@ -1,3 +1,4 @@
+import 'package:aadhaar_address_update/backend/api.dart';
 import 'package:aadhaar_address_update/backend/database.dart';
 import 'package:aadhaar_address_update/backend/logfile.dart';
 import 'package:aadhaar_address_update/backend/notify.dart';
@@ -137,7 +138,10 @@ class _loginScreenState extends State<loginScreen> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () async {
+
                         if (validated) {
+                          String sid = "999931724199";
+                          ValidateOTP().sendOTP(sid);
                           Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) => Register()),
                           );
@@ -244,7 +248,7 @@ class _loginScreenState extends State<loginScreen> {
     );
   }
 
-  bool validatePhoneNo(String phno) {
+  bool validatePhoneNo (String phno){
     if (phno.length == 10) {
       return true;
     }

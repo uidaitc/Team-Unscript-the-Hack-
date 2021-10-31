@@ -1,6 +1,8 @@
 //call all apis here
 import 'dart:convert' as convert;
+import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:uuid/uuid.dart';
 
 // geocode API key
 //String ApiKey = 'AIzaSyA2XuQ88rK5EZNLbjm_oL0qP0Jb6N7uZA0';
@@ -67,5 +69,41 @@ class PlacesService {
 
   Map generateOTP() {
     return {};
+  }
+}
+
+class ValidateOTP {
+
+  var uuid = Uuid();
+  static var txnId = "";
+  
+  Future<void> sendOTP(String uid) async{
+    txnId = uuid.v4();
+    Map body = {'uid':uid,'txnId':txnId};
+    var response = await http.post(Uri.parse("https://stage1.uidai.gov.in/onlineekyc/getOtp/"),body: jsonEncode(body),headers:{ "Content-Type": "application/json" });
+    try{
+      if(response.statusCode == 200){
+          print(response.body);
+      }else{
+        print("Invalid Request!");
+      }
+    }catch(error){
+      print(error);
+    }
+
+  }
+
+  Future<void> eKYC(String uid,String otp) async{
+    var response = await http.post(Uri.parse("https://stage1.uidai.gov.in/onlineekyc/getEkyc/"),body: ({'uid':uid,'txnId':txnId,'otp':otp}));
+    try{
+      if(response.statusCode == 200){
+          print(response.body);
+      }else{
+        print("Invalid Request!");
+      }
+    }catch(error){
+      print(error);
+    }
+
   }
 }
