@@ -1,7 +1,6 @@
 //create notification and pop up box
 import 'package:aadhaar_address_update/config/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotifBox extends StatefulWidget {
   @override

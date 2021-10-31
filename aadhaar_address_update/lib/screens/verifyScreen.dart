@@ -59,7 +59,7 @@ class _verifyScreenState extends State<verifyScreen> {
                       color: Palette.shade2
                     ),
                     cursorColor: Palette.shade1,
-                    keyboardType: TextInputType.text,
+                    keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
                     border: OutlineInputBorder(borderSide: BorderSide(color: Palette.text)),
                     prefixText: '+91',
