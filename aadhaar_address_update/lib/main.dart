@@ -1,7 +1,11 @@
 // import 'package:aadhaar_address_update/screens/dispute.dart';
 // import 'package:aadhaar_address_update/screens/home/homepage.dart';
-import 'package:aadhaar_address_update/backend/logfile.dart';
+// import 'package:aadhaar_address_update/backend/logfile.dart';
+
+// import 'package:aadhaar_address_update/screens/dispute.dart';
+import 'package:aadhaar_address_update/screens/homescreen.dart';
 import 'package:aadhaar_address_update/screens/login.dart';
+// import 'package:aadhaar_address_update/screens/login.dart';
 // import 'package:aadhaar_address_update/screens/otp.dart';
 // import 'package:aadhaar_address_update/screens/verifyScreen.dart';
 // import 'package:aadhaar_address_update/screens/homescreen/updatescreen.dart';
@@ -11,7 +15,6 @@ import 'package:aadhaar_address_update/config/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
-  
   AwesomeNotifications().initialize(
       "",
       [
@@ -32,12 +35,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Aadhar Address Update',
       theme: ThemeData(
         scaffoldBackgroundColor: Palette.shade1,
         primarySwatch: Colors.blue,
       ),
       home: loginScreen(),
+      // home: homeScreen(docId: '12OsfCpXsWzZiFPQtW4Y'),
+      //home: verifyScreen(),
+      //home: disputeScreen(),
     );
   }
 }

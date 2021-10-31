@@ -5,6 +5,7 @@ import 'package:aadhaar_address_update/config/theme.dart';
 import 'package:aadhaar_address_update/screens/otp.dart';
 import 'package:aadhaar_address_update/screens/register.dart';
 import 'package:aadhaar_address_update/widgets/button_square.dart';
+import 'package:aadhaar_address_update/widgets/toast.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
@@ -17,50 +18,57 @@ class loginScreen extends StatefulWidget {
 
 class _loginScreenState extends State<loginScreen> {
   late String phoneNo;
+  bool validated = false;
+  Icon phone = Icon(
+    Icons.phone_android_outlined,
+    color: Palette.shade2,
+    size: 32,
+  );
   @override
   void initState() {
     super.initState();
-    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: Text('Allow Notification'),
-                content: Text('Please allow the app to send notifications.'),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      "Don't allow",
-                      style: TextStyle(color: Palette.shade2, fontSize: 18),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () => AwesomeNotifications()
-                        .requestPermissionToSendNotifications()
-                        .then((_) => Navigator.pop(context)),
-                    child: Text(
-                      "Allow",
-                      style: TextStyle(color: Palette.shade2, fontSize: 18),
-                    ),
-                  ),
-                ],
-              ));
-    });
-    AwesomeNotifications().actionStream.listen((notification) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => NotifBox(
-                    type: "dispute-raised",
-                    data: {},
-                  )));
-    });
+    // AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+    //   showDialog(
+    //       context: context,
+    //       builder: (context) => AlertDialog(
+    //             title: Text('Allow Notification'),
+    //             content: Text('Please allow the app to send notifications.'),
+    //             actions: [
+    //               TextButton(
+    //                 onPressed: () {
+    //                   Navigator.pop(context);
+    //                 },
+    //                 child: Text(
+    //                   "Don't allow",
+    //                   style: TextStyle(color: Palette.shade2, fontSize: 18),
+    //                 ),
+    //               ),
+    //               TextButton(
+    //                 onPressed: () => AwesomeNotifications()
+    //                     .requestPermissionToSendNotifications()
+    //                     .then((_) => Navigator.pop(context)),
+    //                 child: Text(
+    //                   "Allow",
+    //                   style: TextStyle(color: Palette.shade2, fontSize: 18),
+    //                 ),
+    //               ),
+    //             ],
+    //           ));
+    // });
+    // AwesomeNotifications().actionStream.listen((notification) {
+    //   Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //           builder: (context) => NotifBox(
+    //                 type: "dispute-raised",
+    //                 data: {},
+    //               )));
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController controller = TextEditingController();
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -89,11 +97,19 @@ class _loginScreenState extends State<loginScreen> {
               child: Column(
                 children: [
                   TextFormField(
+                    controller: controller,
                     keyboardType: TextInputType.number,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
+                    onChanged: (text) {
+                      if (validatePhoneNo(text)) {
+                        setState(() {
+                          validated = true;
+                        });
+                      }
+                    },
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black12),
@@ -111,11 +127,7 @@ class _loginScreenState extends State<loginScreen> {
                           ),
                         ),
                       ),
-                      suffixIcon: Icon(
-                        Icons.check_circle,
-                        color: Colors.green,
-                        size: 32,
-                      ),
+                      suffixIcon: phone,
                     ),
                   ),
                   SizedBox(
@@ -125,16 +137,14 @@ class _loginScreenState extends State<loginScreen> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () async {
-                        // createNotification('Enter OTP', 'Please enter OTP');
-                        // writeLogs(
-                        //     'C:\\Users\\Mrunmai\\Documents\\UIDAI Hackathon\\auditLog.txt',
-                        //     "{'dummy-data':'dummy-value'}");
-                        bool range = inRange('78.021457', '34.210245',
-                            '78.0276157', '34.2104512');
-                        print(range);
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Register()),
-                        );
+                        if (validated) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => Register()),
+                          );
+                        } else {
+                          showToast(context, "Incorrect Phone Number",
+                              Palette.error, Icon(Icons.error_outline));
+                        }
                       },
                       style: ButtonStyle(
                         foregroundColor:
@@ -232,5 +242,12 @@ class _loginScreenState extends State<loginScreen> {
         ),
       ),
     );
+  }
+
+  bool validatePhoneNo(String phno) {
+    if (phno.length == 10) {
+      return true;
+    }
+    return false;
   }
 }
