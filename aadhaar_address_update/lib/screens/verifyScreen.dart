@@ -74,7 +74,7 @@ class _verifyScreenState extends State<verifyScreen> {
                     textAlign: TextAlign.left,
                     style: TextStyle(color: Palette.shade2),
                     cursorColor: Palette.shade1,
-                    keyboardType: TextInputType.text,
+                    keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
                         alignLabelWithHint: true,
                         border: OutlineInputBorder(

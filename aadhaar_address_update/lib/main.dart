@@ -1,3 +1,5 @@
+import 'package:aadhaar_address_update/screens/dispute.dart';
+// import 'package:aadhaar_address_update/screens/home/homepage.dart';
 // import 'package:aadhaar_address_update/screens/dispute.dart';
 // import 'package:aadhaar_address_update/screens/home/homepage.dart';
 // import 'package:aadhaar_address_update/backend/logfile.dart';
@@ -13,6 +15,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:aadhaar_address_update/config/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 void main() async {
   AwesomeNotifications().initialize(
@@ -32,18 +35,32 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  DateTime timeBackPressed = DateTime.now();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Aadhar Address Update',
-      theme: ThemeData(
-        scaffoldBackgroundColor: Palette.shade1,
-        primarySwatch: Colors.blue,
+    return WillPopScope(
+      onWillPop: () async {
+        timeBackPressed = DateTime.now();
+        final difference = DateTime.now().difference(timeBackPressed);
+        final isExitWarning = difference >= Duration(seconds: 2);
+
+        timeBackPressed = DateTime.now();
+
+        if (isExitWarning) {
+          return false;
+        } else {
+          final message = 'Press back again to exit';
+          Fluttertoast.showToast(msg: message, fontSize: 18);
+          return true;
+        }
+      },
+      child: MaterialApp(
+        theme: ThemeData(
+          scaffoldBackgroundColor: Palette.shade1,
+          primarySwatch: Colors.blue,
+        ),
+        home: loginScreen(),
       ),
-      home: loginScreen(),
-      // home: homeScreen(docId: '12OsfCpXsWzZiFPQtW4Y'),
-      //home: verifyScreen(),
-      //home: disputeScreen(),
     );
   }
 }
