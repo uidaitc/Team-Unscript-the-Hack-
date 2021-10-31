@@ -1,3 +1,5 @@
+import 'package:aadhaar_address_update/backend/database.dart';
+import 'package:aadhaar_address_update/backend/logfile.dart';
 import 'package:aadhaar_address_update/backend/notify.dart';
 import 'package:aadhaar_address_update/config/theme.dart';
 import 'package:aadhaar_address_update/screens/otp.dart';
@@ -48,7 +50,12 @@ class _loginScreenState extends State<loginScreen> {
     });
     AwesomeNotifications().actionStream.listen((notification) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => NotifBox()));
+          context,
+          MaterialPageRoute(
+              builder: (context) => NotifBox(
+                    type: "dispute-raised",
+                    data: {},
+                  )));
     });
   }
 
@@ -118,7 +125,13 @@ class _loginScreenState extends State<loginScreen> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () async {
-                        createNotification('Enter OTP', 'Please enter OTP');
+                        // createNotification('Enter OTP', 'Please enter OTP');
+                        // writeLogs(
+                        //     'C:\\Users\\Mrunmai\\Documents\\UIDAI Hackathon\\auditLog.txt',
+                        //     "{'dummy-data':'dummy-value'}");
+                        bool range = inRange('78.021457', '34.210245',
+                            '78.0276157', '34.2104512');
+                        print(range);
                         Navigator.of(context).push(
                           MaterialPageRoute(builder: (context) => Register()),
                         );
