@@ -131,14 +131,7 @@ class _homeScreenState extends State<homeScreen> {
                                     child: Container(
                                       height: 40,
                                       width: 40,
-                                      // decoration: BoxDecoration(
-                                      //   shape: BoxShape.circle,
-                                      //   border: Border.all(
-                                      //     width: 4,
-                                      //     color: Palette.shade3,
-                                      //   ),
-                                      //   color: Colors.purpleAccent,
-                                      // ),
+                                      
                                     )),
                               ],
                             ),
@@ -146,7 +139,6 @@ class _homeScreenState extends State<homeScreen> {
                           SizedBox(width: 30),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            //mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text('${data["Name"]}',
                                   style: TextStyle(

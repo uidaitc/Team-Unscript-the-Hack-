@@ -1,5 +1,7 @@
+import 'package:aadhaar_address_update/backend/api.dart';
 import 'package:aadhaar_address_update/backend/database.dart';
 import 'package:aadhaar_address_update/config/theme.dart';
+import 'package:aadhaar_address_update/widgets/toast.dart';
 import 'package:flutter/material.dart';
 
 import 'homescreen.dart';
@@ -13,8 +15,11 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  bool validated=false;
   @override
   Widget build(BuildContext context) {
+    String otp="";
+    TextEditingController controller = TextEditingController();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xfff7f6fb),
@@ -82,6 +87,10 @@ class _RegisterState extends State<Register> {
                 child: Column(
                   children: [
                     TextFormField(
+                      controller: controller,
+                      onChanged: (text){
+                        otp = text;
+                      },
                       keyboardType: TextInputType.number,
                       style: TextStyle(
                         fontSize: 18,
@@ -113,15 +122,28 @@ class _RegisterState extends State<Register> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          //isko api call me bulaana hai. tried here for testing
-                          Database().addUser("Mrun", "1234", "20012001", "F",
-                              "PS, Pune", "assets/images/photos");
-                          Navigator.of(context).push(
+                          
+                           setState(() {
+                            print(otp);
+                            validateOTP(otp).then((value){
+                            print(validated);
+                            if(value){
+                            Navigator.of(context).push(
                             MaterialPageRoute(
                                 builder: (context) => homeScreen(
                                       docId: "12OsfCpXsWzZiFPQtW4Y",
-                                    )),
+                                )),
                           );
+                          }else{
+                            showToast(context, "Invalid OTP", Palette.error, Icon(Icons.error));
+                            Navigator.pop(context);
+                          }
+                            });                            
+                            
+                          });
+                          
+    
+   
                         },
                         style: ButtonStyle(
                           foregroundColor:
@@ -152,5 +174,9 @@ class _RegisterState extends State<Register> {
         ),
       ),
     );
+  }
+  Future<bool> validateOTP(String otp) async {
+    validated = await ValidateOTP().eKYC("999977354932", otp);
+    return validated;
   }
 }

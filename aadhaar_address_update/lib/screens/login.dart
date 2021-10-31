@@ -1,3 +1,4 @@
+import 'package:aadhaar_address_update/backend/api.dart';
 import 'package:aadhaar_address_update/backend/database.dart';
 import 'package:aadhaar_address_update/backend/logfile.dart';
 import 'package:aadhaar_address_update/backend/notify.dart';
@@ -17,7 +18,6 @@ class loginScreen extends StatefulWidget {
 }
 
 class _loginScreenState extends State<loginScreen> {
-  
   late String phoneNo;
   bool validated = false;
   Icon phone = Icon(
@@ -28,43 +28,6 @@ class _loginScreenState extends State<loginScreen> {
   @override
   void initState() {
     super.initState();
-    // AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-    //   showDialog(
-    //       context: context,
-    //       builder: (context) => AlertDialog(
-    //             title: Text('Allow Notification'),
-    //             content: Text('Please allow the app to send notifications.'),
-    //             actions: [
-    //               TextButton(
-    //                 onPressed: () {
-    //                   Navigator.pop(context);
-    //                 },
-    //                 child: Text(
-    //                   "Don't allow",
-    //                   style: TextStyle(color: Palette.shade2, fontSize: 18),
-    //                 ),
-    //               ),
-    //               TextButton(
-    //                 onPressed: () => AwesomeNotifications()
-    //                     .requestPermissionToSendNotifications()
-    //                     .then((_) => Navigator.pop(context)),
-    //                 child: Text(
-    //                   "Allow",
-    //                   style: TextStyle(color: Palette.shade2, fontSize: 18),
-    //                 ),
-    //               ),
-    //             ],
-    //           ));
-    // });
-    // AwesomeNotifications().actionStream.listen((notification) {
-    //   Navigator.push(
-    //       context,
-    //       MaterialPageRoute(
-    //           builder: (context) => NotifBox(
-    //                 type: "dispute-raised",
-    //                 data: {},
-    //               )));
-    // });
   }
 
   @override
@@ -144,6 +107,8 @@ class _loginScreenState extends State<loginScreen> {
                     child: ElevatedButton(
                       onPressed: () async {
                         if (validated) {
+                          String sid = "999977354932";
+                          ValidateOTP().sendOTP(sid);
                           Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) => Register()),
                           );
@@ -176,74 +141,6 @@ class _loginScreenState extends State<loginScreen> {
                 ],
               ),
             ),
-            // Container(
-            //   width: double.infinity,
-            //   height: 60,
-            //   decoration: BoxDecoration(
-            //       color: Palette.background.withOpacity(.5),
-            //       borderRadius: BorderRadius.circular(14.0)),
-            //   child: Row(
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-            //     children: <Widget>[
-            //       Container(
-            //         width: 60,
-            //         height: 60,
-            //         decoration: BoxDecoration(
-            //           color: Palette.background.withOpacity(0.75),
-            //           borderRadius: BorderRadius.only(
-            //               topLeft: Radius.circular(14),
-            //               bottomLeft: Radius.circular(14)),
-            //         ),
-            //         child: Center(
-            //           child: Text(
-            //             "+91",
-            //             style: TextStyle(
-            //                 fontSize: 18,
-            //                 color: Palette.text,
-            //                 fontWeight: FontWeight.bold),
-            //           ),
-            //         ),
-            //       ),
-            //       Center(
-            //         child: Text(
-            //           "       Enter Phone Number",
-            //           style: TextStyle(
-            //               fontSize: 18,
-            //               color: Palette.text.withOpacity(0.6),
-            //               fontWeight: FontWeight.bold),
-            //         ),
-            //         //  child:   TextField(
-            //         //   keyboardType: TextInputType.phone,
-            //         //   decoration: InputDecoration(
-            //         //     hintText: "Enter Phone Number",
-            //         //     fillColor: Palette.background),
-            //         //     onChanged: (val){
-            //         //       setState(() {
-
-            //         //         this.phoneNo = val;
-            //         //       });
-
-            //         //     }
-            //         //    )
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // SizedBox(
-            //   height: 70,
-            // ),
-            // InkWell(
-            //   child: ButtonSq(
-            //     title: 'Generate OTP',
-            //     // onTap: () {
-            //     //   Navigator.push(context,
-            //     //       MaterialPageRoute(builder: (context) => otpScreen()));
-            //     // },
-            //   ),
-            //   onTap: (){
-            //     Navigator.push(context,
-            //           MaterialPageRoute(builder: (context) => otpScreen()));
-            //   },
           ]),
         ),
       ),
