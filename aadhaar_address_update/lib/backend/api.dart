@@ -3,6 +3,8 @@ import 'dart:convert' as convert;
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
+import 'package:xml/xml.dart';
+import 'package:xml2json/xml2json.dart';
 
 // geocode API key
 //String ApiKey = 'AIzaSyA2XuQ88rK5EZNLbjm_oL0qP0Jb6N7uZA0';
@@ -76,7 +78,8 @@ class ValidateOTP {
 
   var uuid = Uuid();
   static var txnId = "";
-  
+  static var POI;
+  var poa;
   Future<void> sendOTP(String uid) async{
     txnId = uuid.v4();
     Map body = {'uid':uid,'txnId':txnId};
@@ -96,7 +99,21 @@ class ValidateOTP {
   Future<bool> eKYC(String uid,String otp) async{
     var response = await http.post(Uri.parse("https://stage1.uidai.gov.in/onlineekyc/getEkyc/"),body: jsonEncode({'uid':uid,'txnId':txnId,'otp':otp}),headers:{ "Content-Type": "application/json" });
     try{
-      if(response.body[11] == "Y"){
+      final document = convert.jsonDecode(response.body);
+      print(document["status"]);
+      if(document["status"] == "Y"){
+          // print(document.eKycString); 
+          final myTransformer = Xml2Json();  
+          var info  = XmlDocument.parse(document["eKycString"]); //string to xml
+          myTransformer.parse(info.toXmlString(pretty: true, indent: '\t'));  //xml to pretty string
+          var ekyc = myTransformer.toGData();
+          print("EKYC "+ekyc);
+          var data = json.decode(ekyc);
+          POI = data["KycRes"]["UidData"];
+          poa = data["KycRes"]["UidData"]["Poa"];
+          // poi = (poi.toString().replaceAll("@",""));
+          // print("1"+poi["@dob"]);
+          // print("2"+poi["dob"]);
           return true;
       }else{
         print("Invalid Request!");
@@ -106,5 +123,10 @@ class ValidateOTP {
     }
     return false;
 
+  }
+
+  Map getPOI(){
+    print(POI); 
+    return POI;
   }
 }

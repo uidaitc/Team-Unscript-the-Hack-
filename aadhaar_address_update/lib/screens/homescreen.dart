@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:aadhaar_address_update/backend/api.dart';
 import 'package:aadhaar_address_update/backend/logfile.dart';
 import 'package:aadhaar_address_update/config/theme.dart';
 import 'package:aadhaar_address_update/main.dart';
@@ -18,10 +21,15 @@ class homeScreen extends StatefulWidget {
 class _homeScreenState extends State<homeScreen> {
   homeScreen get widget => super.widget;
   String docId = '';
+  var poi;
+  var poa;
   @override
   void initState() {
     super.initState();
     docId = widget.docId;
+    poi = ValidateOTP().getPOI()["Poi"];
+    poa = ValidateOTP().getPOI()["Poa"];
+    print(poi["dob"]);
   }
 
   @override
@@ -52,27 +60,7 @@ class _homeScreenState extends State<homeScreen> {
 
   Widget home() {
     CollectionReference user = FirebaseFirestore.instance.collection('users');
-    return FutureBuilder(
-        future: user.doc(docId).get(),
-        builder:
-            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (snapshot.hasError) {
-            // showToast(context, "Something went wrong", Palette.error,
-            //     Icon(Icons.cancel));
-            return Text('something went wrong');
-          }
-          if (snapshot.hasData && !snapshot.data!.exists) {
-            // showToast(context, "Document does not exist", Palette.warning,
-            //     Icon(Icons.warning));
-            return Text("Document does not exist");
-          }
-
-          if (snapshot.connectionState == ConnectionState.done) {
-            // showToast(context, "Successful Login", Palette.success,
-            //     Icon(Icons.check));
-            Map<String, dynamic> data =
-                snapshot.data!.data() as Map<String, dynamic>;
-            return Center(
+    return Center(
               child: Container(
                 width: double.infinity,
                 color: Palette.white,
@@ -144,18 +132,18 @@ class _homeScreenState extends State<homeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             //mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text('${data["Name"]}',
+                              Text('${poi["name"]}',
                                   style: TextStyle(
                                     color: Palette.black,
                                     fontSize: 18,
                                     fontWeight: FontWeight.w500,
                                   )),
-                              Text('${data["DOB"]}',
+                              Text('${poi["dob"]}',
                                   style: TextStyle(
                                       color: Palette.black,
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500)),
-                              Text('${data["Gender"]}',
+                              Text('${poi["gender"]}',
                                   style: TextStyle(
                                       color: Palette.black,
                                       fontSize: 18,
@@ -179,7 +167,7 @@ class _homeScreenState extends State<homeScreen> {
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 20),
-                                child: Text('${data["Address"]}',
+                                child: Text('${poa["house"]} '+'${poa["lm"]}, '+'${poa["street"]}, '+'${poa["loc"]}, '+'${poa["vtc"]}, '+'${poa["dist"]}, '+'${poa["state"]}, '+'${poa["country"]}, '+'${poa["pc"]}. ',
                                     style: TextStyle(
                                         color: Palette.black,
                                         fontSize: 18,
@@ -228,13 +216,5 @@ class _homeScreenState extends State<homeScreen> {
                     ]),
               ),
             );
-          }
-          return Center(
-              child: Container(
-                  child: CircularProgressIndicator(
-            color: Palette.shade2,
-            backgroundColor: Palette.background,
-          )));
-        });
   }
 }
