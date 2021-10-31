@@ -3,6 +3,7 @@ import 'package:aadhaar_address_update/config/theme.dart';
 import 'package:aadhaar_address_update/main.dart';
 import 'package:aadhaar_address_update/screens/dispute.dart';
 import 'package:aadhaar_address_update/screens/homescreen/updatescreen.dart';
+import 'package:aadhaar_address_update/screens/verifyScreen.dart';
 import 'package:aadhaar_address_update/widgets/toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -32,15 +33,7 @@ class _homeScreenState extends State<homeScreen> {
             centerTitle: true,
             title: Text("Dashboard",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-            // leading: IconButton(
-            //   icon: Icon(
-            //     Icons.arrow_back,
-            //     color: Colors.white,
-            //   ),
-            //   onPressed: () {
-            //     Navigator.pop(context);
-            //   },
-            // ),
+            automaticallyImplyLeading: false,
             actions: [
               IconButton(
                 icon: Icon(
@@ -48,8 +41,7 @@ class _homeScreenState extends State<homeScreen> {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  writeData("{'naya':line}");
-                  printLogs();
+                  //logout
                   // Navigator.of(context).push(MaterialPageRoute(
                   //     builder: (BuildContext context) => SettingsPage()));
                 },
@@ -203,7 +195,7 @@ class _homeScreenState extends State<homeScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => UpdatePage()));
+                                  builder: (context) => verifyScreen()));
                         },
                         color: Palette.shade1,
                         padding: EdgeInsets.symmetric(horizontal: 50),

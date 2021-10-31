@@ -106,6 +106,11 @@ class _loginScreenState extends State<loginScreen> {
                     onChanged: (text) {
                       if (validatePhoneNo(text)) {
                         setState(() {
+                          phone = Icon(
+                            Icons.check_circle_outline,
+                            color: Palette.success,
+                            size: 32,
+                          );
                           validated = true;
                         });
                       }
