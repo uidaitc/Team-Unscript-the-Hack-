@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Database {
+  
   Database();
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
@@ -38,14 +39,4 @@ class Database {
   }
 }
 
-bool inRange(String latt1, String long1, String latt2, String long2) {
-  double lat1 = double.parse(latt1);
-  double lon1 = double.parse(long1);
-  double lat2 = double.parse(latt2);
-  double lon2 = double.parse(long2);
-  if ((lat1.toStringAsFixed(2) == lat2.toStringAsFixed(2)) &&
-      (lon1.toStringAsFixed(2) == lon2.toStringAsFixed(2))) {
-    return true;
-  }
-  return false;
-}
+

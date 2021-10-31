@@ -1,6 +1,9 @@
+import 'package:aadhaar_address_update/backend/api.dart';
+import 'package:aadhaar_address_update/backend/notify.dart';
 import 'package:aadhaar_address_update/config/theme.dart';
+import 'package:aadhaar_address_update/screens/homescreen/updatescreen.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+//import 'package:intl/intl.dart';
 
 class verifyScreen extends StatefulWidget {
   const verifyScreen({Key? key}) : super(key: key);
@@ -11,10 +14,14 @@ class verifyScreen extends StatefulWidget {
 
 class _verifyScreenState extends State<verifyScreen> {
   bool isVerified = true;
+  String add = '';
+  String otp = '';
+  String sid = "999977354932";
   Widget address = Container();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
           elevation: 1,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -39,11 +46,6 @@ class _verifyScreenState extends State<verifyScreen> {
         padding: EdgeInsets.only(left: 16, top: 25, right: 16),
         child: Column(
           children: [
-            Text("For new Address",
-                style: TextStyle(
-                    color: Palette.shade1,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w500)),
             SizedBox(height: 15, width: 15),
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 4, 15, 4),
@@ -64,6 +66,27 @@ class _verifyScreenState extends State<verifyScreen> {
                 ),
               ),
             ),
+
+            //SizedBox(height: 15, width: 15),
+            Center(
+              child: RaisedButton(
+                onPressed: () {
+                  ValidateOTP().sendOTP(sid);
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(builder: (context) => Register()),
+                  // );
+                },
+                color: Palette.shade1,
+                padding: EdgeInsets.symmetric(horizontal: 50),
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                child: Text(
+                  "Send OTP".toUpperCase(),
+                  style: TextStyle(fontSize: 14, color: Colors.white),
+                ),
+              ),
+            ),
             SizedBox(height: 15, width: 15),
             Center(
               child: Padding(
@@ -71,10 +94,20 @@ class _verifyScreenState extends State<verifyScreen> {
                 child: Container(
                   height: 80,
                   child: TextField(
+                    onChanged: (text) {
+                      setState(() {
+                        otp = text;
+                        ValidateOTP().eKYC(sid, otp).then((value) {
+                          if (value) {
+                            add = 'IISER, Pune';
+                          }
+                        });
+                      });
+                    },
                     textAlign: TextAlign.left,
                     style: TextStyle(color: Palette.shade2),
                     cursorColor: Palette.shade1,
-                    keyboardType: TextInputType.phone,
+                    keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                         alignLabelWithHint: true,
                         border: OutlineInputBorder(
@@ -116,25 +149,43 @@ class _verifyScreenState extends State<verifyScreen> {
     );
   }
 
+  // Widget getAddress(bool isVerified)  {
+  //List latlong =  PlacesService().getAutocomplete('IISER, Pune');
   Widget getAddress(bool isVerified) {
     if (isVerified) {
       return Container(
         child: Center(
-          child: Container(
-            child: Center(
-              child: Center(
+          child: Column(
+            children: [
+              Text('$add'),
+              Container(
                 child: Row(
                   children: [
                     SizedBox(width: 70),
                     RaisedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NotifBox(
+                                        type: 'will-be-updated',
+                                        data: {
+                                          'date':
+                                              '${DateTime.now().add(Duration(days: 7))}'
+                                        })));
+                      },
                       color: Palette.shade1,
                       child: Text('Yes'),
                       textColor: Palette.white,
                     ),
                     SizedBox(width: 50),
                     RaisedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UpdatePage()));
+                      },
                       color: Palette.shade1,
                       padding: const EdgeInsets.fromLTRB(15, 4, 15, 4),
                       child: Text('No'),
@@ -143,7 +194,7 @@ class _verifyScreenState extends State<verifyScreen> {
                   ],
                 ),
               ),
-            ),
+            ],
           ),
         ),
       );
