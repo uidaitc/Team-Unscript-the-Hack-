@@ -107,6 +107,11 @@ class _loginScreenState extends State<loginScreen> {
                     onChanged: (text) {
                       if (validatePhoneNo(text)) {
                         setState(() {
+                          phone = Icon(
+                            Icons.check_circle_outline,
+                            color: Palette.success,
+                            size: 32,
+                          );
                           validated = true;
                         });
                       }
@@ -140,7 +145,7 @@ class _loginScreenState extends State<loginScreen> {
                       onPressed: () async {
 
                         if (validated) {
-                          String sid = "999931724199";
+                          String sid = "999977354932";
                           ValidateOTP().sendOTP(sid);
                           Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) => Register()),

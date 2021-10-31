@@ -93,17 +93,18 @@ class ValidateOTP {
 
   }
 
-  Future<void> eKYC(String uid,String otp) async{
-    var response = await http.post(Uri.parse("https://stage1.uidai.gov.in/onlineekyc/getEkyc/"),body: ({'uid':uid,'txnId':txnId,'otp':otp}));
+  Future<bool> eKYC(String uid,String otp) async{
+    var response = await http.post(Uri.parse("https://stage1.uidai.gov.in/onlineekyc/getEkyc/"),body: jsonEncode({'uid':uid,'txnId':txnId,'otp':otp}),headers:{ "Content-Type": "application/json" });
     try{
-      if(response.statusCode == 200){
-          print(response.body);
+      if(response.body[11] == "Y"){
+          return true;
       }else{
         print("Invalid Request!");
       }
     }catch(error){
       print(error);
     }
+    return false;
 
   }
 }
