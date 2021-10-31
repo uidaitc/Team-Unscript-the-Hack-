@@ -15,10 +15,10 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  bool validated=false;
+  bool validated = false;
   @override
   Widget build(BuildContext context) {
-    String otp="";
+    String otp = "";
     TextEditingController controller = TextEditingController();
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -88,7 +88,7 @@ class _RegisterState extends State<Register> {
                   children: [
                     TextFormField(
                       controller: controller,
-                      onChanged: (text){
+                      onChanged: (text) {
                         otp = text;
                       },
                       keyboardType: TextInputType.number,
@@ -122,28 +122,22 @@ class _RegisterState extends State<Register> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          
-                           setState(() {
+                          setState(() {
                             print(otp);
-                            validateOTP(otp).then((value){
-                            print(validated);
-                            if(value){
-                            Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => homeScreen(
-                                      docId: "12OsfCpXsWzZiFPQtW4Y",
-                                )),
-                          );
-                          }else{
-                            showToast(context, "Invalid OTP", Palette.error, Icon(Icons.error));
-                            Navigator.pop(context);
-                          }
-                            });                            
-                            
+                            validateOTP(otp).then((value) {
+                              print(validated);
+                              if (value) {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) => homeScreen()),
+                                );
+                              } else {
+                                showToast(context, "Invalid OTP", Palette.error,
+                                    Icon(Icons.error));
+                                Navigator.pop(context);
+                              }
+                            });
                           });
-                          
-    
-   
                         },
                         style: ButtonStyle(
                           foregroundColor:
@@ -175,6 +169,7 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
+
   Future<bool> validateOTP(String otp) async {
     validated = await ValidateOTP().eKYC("999977354932", otp);
     return validated;

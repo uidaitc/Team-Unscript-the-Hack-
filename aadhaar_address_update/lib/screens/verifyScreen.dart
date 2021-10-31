@@ -118,14 +118,15 @@ class _verifyScreenState extends State<verifyScreen> {
                     textAlign: TextAlign.left,
                     style: TextStyle(color: Palette.shade2),
                     cursorColor: Palette.shade1,
-                    keyboardType: TextInputType.text,
+                    keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
                         alignLabelWithHint: true,
                         border: OutlineInputBorder(
                             borderSide: BorderSide(color: Palette.text)),
                         helperText:
-                            '           Please Enter the 6 digit OTP sent to your Introducer',
+                            '    Please Enter the 6 digit OTP sent to your Introducer',
                         prefixIcon: Icon(Icons.lock),
+
                         hintText: "Enter OTP",
                         fillColor: Palette.shade3),
                   ),
@@ -157,7 +158,7 @@ class _verifyScreenState extends State<verifyScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 30),
 
             //add fetching data function here
             address,
@@ -173,7 +174,11 @@ class _verifyScreenState extends State<verifyScreen> {
         child: Center(
           child: Column(
             children: [
-              Text('$ogaddress'),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(14, 5, 8, 5),
+                child: Text('Address: $ogaddress', style: TextStyle(color: Palette.text, fontSize: 18, fontWeight: FontWeight.w500),),
+              ),
+              SizedBox(height: 30),
               Container(
                 child: Row(
                   children: [

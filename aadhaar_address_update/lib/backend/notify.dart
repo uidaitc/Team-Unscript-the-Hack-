@@ -1,5 +1,8 @@
 //create notification and pop up box
+//import 'dart:html';
+
 import 'package:aadhaar_address_update/config/theme.dart';
+import 'package:aadhaar_address_update/screens/homescreen.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -73,7 +76,13 @@ class _NotifBoxState extends State<NotifBox> {
             style: TextStyle(fontSize: 18),
           ),
           Spacer(),
-          TextButton(onPressed: () {}, child: Text("Raise a dispute")),
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => homeScreen()),
+                );
+              },
+              child: Text("Raise a dispute")),
           Spacer()
         ],
       );
@@ -99,7 +108,13 @@ class _NotifBoxState extends State<NotifBox> {
             ),
           ),
           Spacer(),
-          TextButton(onPressed: () {}, child: Text("Ok")),
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => homeScreen()),
+                );
+              },
+              child: Text("Ok")),
           Spacer()
         ],
       );
@@ -109,23 +124,37 @@ class _NotifBoxState extends State<NotifBox> {
           Spacer(),
           Text(
             "Updation in Process",
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(
+                fontSize: 28, fontWeight: FontWeight.bold, color: Palette.text),
           ),
           SizedBox(
             height: 30,
           ),
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.fromLTRB(23, 30, 15, 10),
             child: Text(
-              "The address is being updated. The process will be completed by ${data['date']}",
+              "The address is being updated. The process will be completed by ${data['date']} .",
               style: TextStyle(
-                fontSize: 16,
-                // wordSpacing: 2
-              ),
+                  fontSize: 20, wordSpacing: 2, fontWeight: FontWeight.w500),
             ),
           ),
-          Spacer(),
-          TextButton(onPressed: () {}, child: Text("Ok")),
+          //Spacer(),
+          SizedBox(
+            height: 30,
+          ),
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => homeScreen()),
+                );
+              },
+              child: Text(
+                "Okay",
+                style: TextStyle(
+                    color: Palette.shade1,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600),
+              )),
           Spacer()
         ],
       );
@@ -151,7 +180,13 @@ class _NotifBoxState extends State<NotifBox> {
             ),
           ),
           Spacer(),
-          TextButton(onPressed: () {}, child: Text("Okay")),
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => homeScreen()),
+                );
+              },
+              child: Text("Okay")),
           Spacer()
         ],
       );
