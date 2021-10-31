@@ -10,4 +10,7 @@ class Palette {
   static const Color shade2 = Color(0xFF9B27CD);
   static const Color shade3 = Color(0xFFB14ADC);
   static const Color shade4 = Color(0xFFC375E5);
+  static const Color success = Color(0xFF64BC26);
+  static const Color error = Color(0xFFEA1601);
+  static const Color warning = Color(0xFFFAD202);
 }

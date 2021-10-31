@@ -2,6 +2,7 @@ import 'package:aadhaar_address_update/backend/database.dart';
 import 'package:aadhaar_address_update/config/theme.dart';
 import 'package:flutter/material.dart';
 
+import 'homescreen.dart';
 import 'otp.dart';
 
 class Register extends StatefulWidget {
@@ -117,7 +118,9 @@ class _RegisterState extends State<Register> {
                               "PS, Pune", "assets/images/photos");
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                                builder: (context) => otpScreen()),
+                                builder: (context) => homeScreen(
+                                      docId: "12OsfCpXsWzZiFPQtW4Y",
+                                    )),
                           );
                         },
                         style: ButtonStyle(

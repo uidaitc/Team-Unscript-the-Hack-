@@ -56,9 +56,10 @@ class otpScreen extends StatelessWidget {
               onTap: () {
                 int newOtp = getOTP(a, b, c, d, e, f);
                 print(newOtp);
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => NotifBox()),
-                );
+                // createNotification('Enter OTP', 'Please enter OTP');
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(builder: (context) => NotifBox()),
+                // );
               },
             )
           ],

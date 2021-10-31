@@ -1,5 +1,7 @@
 import 'package:aadhaar_address_update/config/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 class verifyScreen extends StatefulWidget {
   const verifyScreen({ Key? key }) : super(key: key);
 
@@ -64,7 +66,7 @@ class _verifyScreenState extends State<verifyScreen> {
                     border: OutlineInputBorder(borderSide: BorderSide(color: Palette.text)),
                     prefixText: '+91',
                     
-                        hintText: "     Enter Landlord's Number",
+                        hintText: "     Enter Introducer's Number",
                         fillColor: Palette.shade3),
                         
                         
@@ -86,11 +88,11 @@ class _verifyScreenState extends State<verifyScreen> {
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                       border: OutlineInputBorder(borderSide: BorderSide(color: Palette.text)),
-                      helperText: '           Please Enter the 6 digit OTP sent to your owner',
+                      helperText: '           Please Enter the 6 digit OTP sent to your Introducer',
                       prefixIcon: Icon(Icons.lock),
                   
                       
-                          hintText: "            Enter OTP",
+                          hintText: "    Enter OTP",
                           fillColor: Palette.shade3),
                           
                           
@@ -179,4 +181,22 @@ class _verifyScreenState extends State<verifyScreen> {
     return CircularProgressIndicator(color: Palette.text);
 
   }
+  calculateAge(DateTime birthDate) {
+  DateTime currentDate = DateTime.now();
+  int age = currentDate.year - birthDate.year;
+  int month1 = currentDate.month;
+  int month2 = birthDate.month;
+  if (month2 > month1) {
+    age--;
+  } else if (month1 == month2) {
+    int day1 = currentDate.day;
+    int day2 = birthDate.day;
+    if (day2 > day1) {
+      age--;
+    }
+  }
+  return age;
+}
+
+  
 }

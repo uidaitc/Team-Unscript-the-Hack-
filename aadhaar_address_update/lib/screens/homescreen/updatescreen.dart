@@ -1,6 +1,7 @@
 import 'package:aadhaar_address_update/config/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:aadhaar_address_update/widgets/toast.dart' as toast;
 
 class UpdatePage extends StatefulWidget {
   const UpdatePage({Key? key}) : super(key: key);
@@ -18,26 +19,31 @@ class _UpdatePageState extends State<UpdatePage> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 1,
         centerTitle: true,
-        title: Text('hi', textAlign: TextAlign.center,),
+        title: Text(
+          'Update Aadhaar Details',
+          textAlign: TextAlign.center,
+        ),
         leading: IconButton(
           icon: Icon(
-            Icons.arrow_back,
+            Icons.cancel_outlined,
             color: Colors.white,
           ),
-          onPressed: () { },
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.settings,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              // Navigator.of(context).push(MaterialPageRoute(
-              //     builder: (BuildContext context) => SettingsPage()));
-            },
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(
+        //       Icons.settings,
+        //       color: Colors.white,
+        //     ),
+        //     onPressed: () {
+        //       // Navigator.of(context).push(MaterialPageRoute(
+        //       //     builder: (BuildContext context) => SettingsPage()));
+        //     },
+        //   ),
+        // ],
       ),
       body: Container(
         color: Palette.white,
@@ -57,9 +63,7 @@ class _UpdatePageState extends State<UpdatePage> {
                       fontWeight: FontWeight.w500),
                 );
               }),
-              SizedBox(
-                height: 15,
-              ),
+
               // Center(
               //   child: Stack(
               //     children: [
@@ -107,92 +111,72 @@ class _UpdatePageState extends State<UpdatePage> {
               //   ),
               // ),
               SizedBox(
-                height: 35,
+                height: 20,
               ),
 
               Padding(
-                padding: const EdgeInsets.fromLTRB(15,4,15,4),
+                padding: const EdgeInsets.fromLTRB(15, 4, 15, 4),
                 child: Container(
                   height: 50,
                   child: TextField(
-                    style: TextStyle(
-                      color: Palette.shade2
-                    ),
+                    style: TextStyle(color: Palette.shade2),
                     cursorColor: Palette.shade1,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                         hintText: "Door/Flat Number",
                         fillColor: Palette.shade3),
-                        
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(15,4,15,4),
+                padding: const EdgeInsets.fromLTRB(15, 4, 15, 4),
                 child: Container(
                   height: 50,
                   child: TextField(
-                    style: TextStyle(
-                      color: Palette.shade2
-                    ),
+                    style: TextStyle(color: Palette.shade2),
                     cursorColor: Palette.shade1,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
-                        hintText: "Society Name",
-                        fillColor: Palette.shade1),
-                        
+                        hintText: "Society Name", fillColor: Palette.shade1),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(15,4,15,4),
+                padding: const EdgeInsets.fromLTRB(15, 4, 15, 4),
                 child: Container(
                   height: 50,
                   child: TextField(
-                    style: TextStyle(
-                      color: Palette.shade2
-                    ),
+                    style: TextStyle(color: Palette.shade2),
                     cursorColor: Palette.shade1,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
-                        hintText: "Landmark",
-                        fillColor: Palette.shade3),
-                        
+                        hintText: "Landmark", fillColor: Palette.shade3),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(15,4,15,4),
+                padding: const EdgeInsets.fromLTRB(15, 4, 15, 4),
                 child: Container(
                   height: 50,
                   child: TextField(
-                    style: TextStyle(
-                      color: Palette.shade2
-                    ),
+                    style: TextStyle(color: Palette.shade2),
                     cursorColor: Palette.shade1,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
-                        hintText: "Street Name",
-                        fillColor: Palette.shade3),
-                        
+                        hintText: "Street Name", fillColor: Palette.shade3),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(15,4,15,4),
+                padding: const EdgeInsets.fromLTRB(15, 4, 15, 4),
                 child: Container(
                   height: 50,
                   child: TextField(
-                    
-                    style: TextStyle(
-                      color: Palette.shade2
-                    ),
+                    style: TextStyle(color: Palette.shade2),
                     cursorColor: Palette.shade1,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
-                        hintText: "Locality",
-                        fillColor: Palette.shade3),
-                        
+                        hintText: "Locality", fillColor: Palette.shade3),
                   ),
                 ),
               ),
@@ -266,7 +250,7 @@ class _UpdatePageState extends State<UpdatePage> {
                   decoration: BoxDecoration(
                     // border: Border.all(),
                     border: Border.all(color: Palette.text),
-                    
+
                     borderRadius: BorderRadius.circular(10),
                     color: Palette.white,
                   ),
@@ -279,7 +263,7 @@ class _UpdatePageState extends State<UpdatePage> {
               // buildTextField("DOB", "26-10-2021", false),
               // buildTextField("Address", "Pashan, Pune", false),
               SizedBox(
-                height: 25,
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -299,12 +283,19 @@ class _UpdatePageState extends State<UpdatePage> {
                   //           color: Colors.black)),
                   // ),
                   RaisedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (!validate()) {
+                        toast.showToast(context, "Please fill all fields",
+                            Palette.error, Icon(Icons.error_outline));
+                      } else {
+                        toast.showToast(context, "Address Changed Successfully",
+                            Palette.success, Icon(Icons.check));
+                      }
+                    },
                     color: Palette.shade1,
                     padding: EdgeInsets.symmetric(horizontal: 50),
                     elevation: 2,
                     shape: RoundedRectangleBorder(
-                      
                         borderRadius: BorderRadius.circular(20)),
                     child: Text(
                       "Confirm Changes".toUpperCase(),
@@ -351,4 +342,8 @@ class _UpdatePageState extends State<UpdatePage> {
   //     ),
   //   );
   // }
+  bool validate() {
+    //String flat, String society, String landmark, String street, String locality
+    return true;
+  }
 }

@@ -64,4 +64,8 @@ class PlacesService {
     }
     return searchDetails;
   }
+
+  Map generateOTP() {
+    return {};
+  }
 }
